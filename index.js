@@ -112,26 +112,12 @@ async function run() {
 
         // Check if user with the same email already exists
         const existingUser = await userCollection.findOne(query);
-        const { email, password } = req.body;
 
-        // Check if user already exists
-        // const existingUser = await userCollection.findOne({ email });
-        if (existingUser) {
-          return res.status(400).json({ message: 'User already exists' });
-        }
-  
-        try {
-          // Hash the password
-          const hashedPassword = await bcrypt.hash(password, 10);
-  
-          // Insert the user into the MongoDB collection
-          await userCollection.insertOne({ email, password: hashedPassword });
-  
-          res.status(201).json({ message: 'User registered successfully' });
-        } catch (error) {
-          console.error('Error registering user:', error);
-          res.status(500).json({ message: 'Internal server error' });
-        }
+        // const existingUsername = await userCollection.findOne(userName);
+
+        // if (existingUsername) {
+        //   return res.send({ message: "Username already exists" });
+        // }
 
         if (existingUser) {
           // If user exists, remove uploaded file if it exists
